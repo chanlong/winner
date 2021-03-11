@@ -40,7 +40,7 @@ import java.util.List;
  * @Author chanlong
  * @Date 2021/3/10 下午2:43
  */
-public abstract class CommmonTemplateController {
+public abstract class CommonTemplateController {
 
     @Autowired
     private CommonTemplateService service;
