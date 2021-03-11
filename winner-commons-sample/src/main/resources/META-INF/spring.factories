@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.winner.commons.sample.config.Knife4jConfig,\
+  com.winner.commons.sample.config.MybatisConfig

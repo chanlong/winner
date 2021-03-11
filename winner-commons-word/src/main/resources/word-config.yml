@@ -1,0 +1,7 @@
+com:
+  winner:
+    common:
+      word:
+        export-path: /Volumes/DEV/out
+        gramer-prefix: '{'
+        gramer-suffix: '}'

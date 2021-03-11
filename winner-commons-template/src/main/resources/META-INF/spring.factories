@@ -1,0 +1,5 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.winner.commons.template.config.TemplateConfig,\
+  com.winner.commons.template.service.impl.CommonTemplateServiceImpl,\
+  com.winner.commons.template.service.impl.CommonTemplateFileServiceImpl,\
+  com.winner.commons.template.service.impl.CommonTemplateModelServiceImpl

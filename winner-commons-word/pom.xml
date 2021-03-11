@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	
+	<modelVersion>4.0.0</modelVersion>
+	
+	<parent>
+		<groupId>com.winner.commons</groupId>
+		<artifactId>winner-commons</artifactId>
+		<version>1.0.0</version>
+	</parent>
+	
+	<artifactId>winner-commons-word</artifactId>
+	<name>winner-commons-word</name>
+	<url>http://maven.apache.org</url>
+	
+	<properties>
+		<poi.version>4.1.2</poi.version>
+		<slf4j.version>1.7.30</slf4j.version>
+	</properties>
+	
+	<dependencies>
+		<!-- import poi dependencies -->
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>${poi.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>${poi.version}</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.apache.poi</groupId>
+		    <artifactId>ooxml-schemas</artifactId>
+		    <version>1.4</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-expression</artifactId>
+		</dependency>
+		
+		<!-- import poi-tl's dependencies -->
+		<dependency>
+		    <groupId>org.slf4j</groupId>
+		    <artifactId>slf4j-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>20.0</version>
+			<scope>compile</scope>
+		</dependency>
+	</dependencies>
+</project>

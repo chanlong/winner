@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.winner.commons.template.mapper.CommonTemplateFileMapper">
+
+    <insert id="createTemplateFile" parameterType="com.winner.commons.template.entity.CommonTemplateFile">
+        <selectKey keyProperty="file.templateVersion" resultType="Integer" order="BEFORE">
+            select case when o.ver is null then 0 ELSE o.ver + 1 end from (select max(template_version) ver from tb_com_template_file where template_id = #{file.templateId}) o
+        </selectKey>
+        INSERT INTO tb_com_template_file (
+            id,
+            template_id,
+            template_url,
+            template_path,
+            template_version
+        ) VALUES (
+            #{file.id},
+            #{file.templateId},
+            #{file.templateUrl},
+            #{file.templatePath},
+            #{file.templateVersion}
+        )
+    </insert>
+
+    <select id="getTemplateFile" resultType="com.winner.commons.template.entity.CommonTemplateFile">
+        select * from tb_com_template_file where id = (
+            select t.id from tb_com_template_file t group by t.id,t.template_id having max(t.template_version) and t.template_id = #{templateId}
+        )
+    </select>
+</mapper>
