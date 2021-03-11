@@ -2,7 +2,7 @@ package com.winner.commons.sample.controller;
 
 import com.deepoove.poi.config.ConfigureBuilder;
 import com.deepoove.poi.policy.TableRenderPolicy;
-import com.winner.commons.template.controller.CommmonTemplateController;
+import com.winner.commons.template.controller.CommonTemplateController;
 import com.winner.commons.word.poitl.data.ColspanCells;
 import com.winner.commons.word.poitl.data.ColspanRows;
 import com.winner.commons.word.poitl.model.WordDataModel;
@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Api(tags = "样例应用-模版管理")
 @RestController
 @RequestMapping("/template")
-public class WordTemplateController extends CommmonTemplateController {
+public class WordTemplateController extends CommonTemplateController {
 
     @Override
     protected ConfigureBuilder builder() {
