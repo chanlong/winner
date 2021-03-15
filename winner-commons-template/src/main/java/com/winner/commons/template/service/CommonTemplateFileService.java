@@ -2,6 +2,7 @@ package com.winner.commons.template.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.deepoove.poi.config.ConfigureBuilder;
+import com.diboot.core.service.BaseService;
 import com.winner.commons.base.model.FileModel;
 import com.winner.commons.template.entity.CommonTemplate;
 import com.winner.commons.template.entity.CommonTemplateFile;
@@ -20,7 +21,7 @@ import java.io.Serializable;
  * @Author chanlong
  * @Date 2021/2/26 上午9:57
  */
-public interface CommonTemplateFileService extends IService<CommonTemplateFile> {
+public interface CommonTemplateFileService extends BaseService<CommonTemplateFile> {
 
     CommonTemplateFile upload(FileModel fileModel, CommonTemplate template) throws Exception;
 

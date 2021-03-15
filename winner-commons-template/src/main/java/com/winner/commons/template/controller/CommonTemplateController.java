@@ -1,11 +1,8 @@
 package com.winner.commons.template.controller;
 
-import cn.hutool.extra.template.engine.TemplateFactory;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.deepoove.poi.config.ConfigureBuilder;
-import com.deepoove.poi.policy.TableRenderPolicy;
-import com.winner.commons.base.controller.BaseController;
 import com.winner.commons.base.enums.PolicyType;
 import com.winner.commons.base.model.ApiResponse;
 import com.winner.commons.base.model.FileModel;
@@ -21,7 +18,6 @@ import com.winner.commons.word.poitl.model.WordDataModel;
 import com.winner.commons.word.poitl.resolver.BlankTemplateFactory;
 import com.winner.commons.word.poitl.resolver.BlockTableParseTemplateFactory;
 import com.winner.commons.word.poitl.resolver.BlockTableTemplateFactory;
-import com.winner.commons.word.poitl.util.WordUtil;
 import io.swagger.annotations.ApiOperation;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,7 +51,7 @@ public abstract class CommonTemplateController {
     @ApiOperation(value = "分页查询")
     public ApiResponse page(final PageWrapper page, final CommonTemplateQuery query) {
         try {
-            return ApiResponse.ok().data(service.page(page.createPage(), query.createQuery()));
+            return ApiResponse.ok().data(service.getEntityList(query.createQuery(), page.pagination()));
         } catch (Exception e) {
             return ApiResponse.error(e);
         }
@@ -65,7 +61,7 @@ public abstract class CommonTemplateController {
     @ApiOperation(value = "普通查询")
     public ApiResponse list(final CommonTemplateQuery query) {
         try {
-            return ApiResponse.ok().data(service.list(query.createQuery()));
+            return ApiResponse.ok().data(service.getEntityList(query.createQuery()));
         } catch (Exception e) {
             return ApiResponse.error(e);
         }
@@ -75,7 +71,7 @@ public abstract class CommonTemplateController {
     @ApiOperation(value = "获取详情")
     public ApiResponse detail(@PathVariable final Serializable id) {
         try {
-            return ApiResponse.ok().data(service.getById(id));
+            return ApiResponse.ok().data(service.getEntity(id));
         } catch (Exception e) {
             return ApiResponse.error(e);
         }
@@ -85,7 +81,7 @@ public abstract class CommonTemplateController {
     @ApiOperation(value = "逻辑删除")
     public ApiResponse remove(@PathVariable final Serializable id) {
         try {
-            return service.removeById(id) ? ApiResponse.ok() : ApiResponse.of("删除失败！").error();
+            return service.deleteEntity(id) ? ApiResponse.ok() : ApiResponse.of("删除失败！").error();
         } catch (Exception e) {
             return ApiResponse.error(e);
         }
@@ -95,7 +91,7 @@ public abstract class CommonTemplateController {
     @ApiOperation(value = "保存模版")
     public ApiResponse save(@RequestBody final CommonTemplate entity) {
         try {
-            return service.saveOrUpdate(entity) ? ApiResponse.ok() : ApiResponse.of("保存失败！").error();
+            return service.createOrUpdateEntity(entity) ? ApiResponse.ok() : ApiResponse.of("保存失败！").error();
         } catch (Exception e) {
             return ApiResponse.error(e);
         }
@@ -106,7 +102,7 @@ public abstract class CommonTemplateController {
     public ApiResponse list(@PathVariable String templateId) {
         try {
             LambdaQueryWrapper<CommonTemplateFile> queryWrapper = Wrappers.lambdaQuery();
-            List<CommonTemplateFile> result = fileService.list(queryWrapper.eq(CommonTemplateFile::getTemplateId, templateId));
+            List<CommonTemplateFile> result = fileService.getEntityList(queryWrapper.eq(CommonTemplateFile::getTemplateId, templateId));
             return ApiResponse.ok().data(result);
         } catch (Exception e) {
             return ApiResponse.error(e);
@@ -127,7 +123,7 @@ public abstract class CommonTemplateController {
     @ApiOperation(value = "上传文件")
     public ApiResponse upload(@PathVariable String templateId, MultipartFile file) {
         try {
-            CommonTemplate template = service.getById(templateId);
+            CommonTemplate template = service.getEntity(templateId);
             if (null != template) {
                 CommonTemplateFile templateFile = fileService.upload(FileModel.of(file).policy(PolicyType.DATETIME), template);
                 fileService.builder(builder(false, templateFile)).parse(templateFile);
@@ -167,7 +163,7 @@ public abstract class CommonTemplateController {
                                                                          .expression(model.expression())
                                                                          .templateId(templateFile.getTemplateId())
                                                                          .templateFileId(templateFile.getId());
-                    modelService.saveOrUpdate(entity);
+                    modelService.createOrUpdateEntity(entity);
                     return Void.TYPE;
                 }));
             }
@@ -179,7 +175,7 @@ public abstract class CommonTemplateController {
                                                                      .expression(model.expression())
                                                                      .templateId(templateFile.getTemplateId())
                                                                      .templateFileId(templateFile.getId());
-                modelService.saveOrUpdate(entity);
+                modelService.createOrUpdateEntity(entity);
                 return Void.TYPE;
             }));
         }

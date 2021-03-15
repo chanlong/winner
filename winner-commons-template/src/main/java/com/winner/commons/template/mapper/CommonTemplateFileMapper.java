@@ -1,6 +1,6 @@
 package com.winner.commons.template.mapper;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.diboot.core.mapper.BaseCrudMapper;
 import com.winner.commons.template.entity.CommonTemplateFile;
 import org.apache.ibatis.annotations.Param;
 
@@ -15,7 +15,7 @@ import java.io.Serializable;
  * @Author chanlong
  * @Date 2021/2/26 上午9:57
  */
-public interface CommonTemplateFileMapper extends BaseMapper<CommonTemplateFile> {
+public interface CommonTemplateFileMapper extends BaseCrudMapper<CommonTemplateFile> {
 
     /**
      * 保存模版文件.

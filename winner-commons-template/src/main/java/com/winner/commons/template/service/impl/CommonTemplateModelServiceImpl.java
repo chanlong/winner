@@ -1,6 +1,6 @@
 package com.winner.commons.template.service.impl;
 
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.diboot.core.service.impl.BaseServiceImpl;
 import com.winner.commons.template.entity.CommonTemplateModel;
 import com.winner.commons.template.mapper.CommonTemplateModelMapper;
 import com.winner.commons.template.service.CommonTemplateModelService;
@@ -18,5 +18,5 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional
-public class CommonTemplateModelServiceImpl extends ServiceImpl<CommonTemplateModelMapper, CommonTemplateModel> implements CommonTemplateModelService {
+public class CommonTemplateModelServiceImpl extends BaseServiceImpl<CommonTemplateModelMapper, CommonTemplateModel> implements CommonTemplateModelService {
 }

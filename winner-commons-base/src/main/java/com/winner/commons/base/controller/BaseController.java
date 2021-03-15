@@ -9,7 +9,9 @@
 package com.winner.commons.base.controller;
 
 import com.baomidou.mybatisplus.extension.activerecord.Model;
-import com.baomidou.mybatisplus.extension.service.IService;
+import com.diboot.core.service.BaseService;
+import com.diboot.core.vo.Pagination;
+import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.winner.commons.base.model.ApiResponse;
 import com.winner.commons.base.query.BaseQuery;
 import com.winner.commons.base.query.PageWrapper;
@@ -22,6 +24,7 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * <p>描述: </p>
@@ -31,53 +34,60 @@ import java.io.Serializable;
  * @version 1.0.2021
  */
 @Slf4j
-public abstract class BaseController<S extends IService<E>, E extends Model<E>, Q extends BaseQuery<E>> implements ApplicationContextAware {
+public abstract class BaseController<S extends BaseService<E>, E extends Model<E>, Q extends BaseQuery<E>> implements ApplicationContextAware {
 
 	@GetMapping("/page")
-	@ApiOperation(value = "分页查询")
-	public ApiResponse page(final PageWrapper page, final Q query) {
+	@ApiOperation(value = "通用-分页查询")
+	@ApiOperationSupport(order = 101)
+	public ApiResponse page(final PageWrapper wrapper, final Q query) {
 		try {
-			return ApiResponse.ok().data(service.page(page.createPage(), query.createQuery()));
+			Pagination pagination = wrapper.pagination();
+			List<E> result = service.getEntityList(query.createQuery(), pagination);
+			return ApiResponse.ok().data(result).page(pagination);
 		} catch (Exception e) {
 			return ApiResponse.error(e);
 		}
 	}
 
 	@GetMapping("/all")
-	@ApiOperation(value = "普通查询")
+	@ApiOperation(value = "通用-普通查询")
+	@ApiOperationSupport(order = 102)
 	public ApiResponse list(final Q query) {
 		try {
-			return ApiResponse.ok().data(service.list(query.createQuery()));
+			return ApiResponse.ok().data(service.getEntityList(query.createQuery()));
 		} catch (Exception e) {
 			return ApiResponse.error(e);
 		}
 	}
 
 	@GetMapping("/{id}")
-	@ApiOperation(value = "获取详情")
+	@ApiOperation(value = "通用-获取详情")
+	@ApiOperationSupport(order = 103)
 	public ApiResponse detail(@PathVariable final Serializable id) {
 		try {
-			return ApiResponse.ok().data(service.getById(id));
+			return ApiResponse.ok().data(service.getEntity(id));
 		} catch (Exception e) {
 			return ApiResponse.error(e);
 		}
 	}
 
 	@DeleteMapping("/{id}")
-	@ApiOperation(value = "逻辑删除")
+	@ApiOperation(value = "通用-逻辑删除")
+	@ApiOperationSupport(order = 104)
 	public ApiResponse remove(@PathVariable final Serializable id) {
 		try {
-			return service.removeById(id) ? ApiResponse.ok() : ApiResponse.of("删除失败！").error();
+			return service.deleteEntity(id) ? ApiResponse.ok() : ApiResponse.of("删除失败！").error();
 		} catch (Exception e) {
 			return ApiResponse.error(e);
 		}
 	}
 
 	@PostMapping
-	@ApiOperation(value = "保存数据")
-	public ApiResponse save(@RequestBody final E entity) {
+	@ApiOperation(value = "通用-保存数据")
+	@ApiOperationSupport(order = 105)
+	public ApiResponse save(@RequestBody final E vo) {
 		try {
-			return service.saveOrUpdate(entity) ? ApiResponse.ok() : ApiResponse.of("保存失败！").error();
+			return service.createOrUpdateEntity(vo) ? ApiResponse.ok() : ApiResponse.of("保存失败！").error();
 		} catch (Exception e) {
 			return ApiResponse.error(e);
 		}
@@ -94,5 +104,9 @@ public abstract class BaseController<S extends IService<E>, E extends Model<E>, 
 		Class<S> requiredType = ReflectUtil.getGenericType(this.getClass());
 		this.service = applicationContext.getBean(requiredType);
 		log.info("The Mybatis's IService interface is implemented: {}", this.service);
+	}
+
+	public S getService() {
+		return service;
 	}
 }

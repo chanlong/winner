@@ -1,6 +1,6 @@
 package com.winner.commons.template.mapper;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.diboot.core.mapper.BaseCrudMapper;
 import com.winner.commons.template.entity.CommonTemplate;
 
 /**
@@ -12,6 +12,6 @@ import com.winner.commons.template.entity.CommonTemplate;
  * @Author chanlong
  * @Date 2021/2/24 下午2:55
  */
-public interface CommonTemplateMapper extends BaseMapper<CommonTemplate> {
+public interface CommonTemplateMapper extends BaseCrudMapper<CommonTemplate> {
 
 }

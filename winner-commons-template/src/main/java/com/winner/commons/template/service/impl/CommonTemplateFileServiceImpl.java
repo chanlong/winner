@@ -3,8 +3,8 @@ package com.winner.commons.template.service.impl;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.text.StrBuilder;
 import cn.hutool.core.util.IdUtil;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.deepoove.poi.config.ConfigureBuilder;
+import com.diboot.core.service.impl.BaseServiceImpl;
 import com.winner.commons.base.model.FileModel;
 import com.winner.commons.template.entity.CommonTemplate;
 import com.winner.commons.template.entity.CommonTemplateFile;
@@ -34,7 +34,7 @@ import java.io.Serializable;
 @Slf4j
 @Service
 @Transactional
-public class CommonTemplateFileServiceImpl extends ServiceImpl<CommonTemplateFileMapper, CommonTemplateFile> implements CommonTemplateFileService {
+public class CommonTemplateFileServiceImpl extends BaseServiceImpl<CommonTemplateFileMapper, CommonTemplateFile> implements CommonTemplateFileService {
 
     @Autowired
     private CommonTemplateFileMapper mapper;

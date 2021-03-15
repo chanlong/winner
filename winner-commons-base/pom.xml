@@ -12,8 +12,10 @@
     <artifactId>winner-commons-base</artifactId>
 
     <properties>
+        <diboot.version>2.2.0</diboot.version>
         <knife4j.version>2.0.8</knife4j.version>
         <mybatis-plus.version>3.4.0</mybatis-plus.version>
+        <dynamic-datasource.version>3.3.1</dynamic-datasource.version>
     </properties>
 
     <dependencies>
@@ -36,7 +38,14 @@
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
-            <version>3.3.1</version>
+            <version>${dynamic-datasource.version}</version>
+        </dependency>
+
+        <!-- diboot-core dependencies -->
+        <dependency>
+            <groupId>com.diboot</groupId>
+            <artifactId>diboot-core</artifactId>
+            <version>${diboot.version}</version>
         </dependency>
 
         <!-- swagger doc dependencies -->

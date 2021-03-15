@@ -9,6 +9,7 @@
 package com.winner.commons.base.query;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.diboot.core.vo.Pagination;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -30,15 +31,15 @@ public class PageWrapper implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@ApiModelProperty(value = "当前页", position = 98)
-	private Long currentPage = 1L;
+	private Integer currentPage = 1;
 	
 	@ApiModelProperty(value = "页大小", position = 99)
-	private Long pageSize = 10L;
+	private Integer pageSize = 10;
 
-	public <E> Page<E> createPage() {
-		Page<E> page = new Page<>();
-		page.setSize(pageSize);
-		page.setCurrent(currentPage);
+	public Pagination pagination() {
+		Pagination page = new Pagination();
+		page.setPageSize(pageSize);
+		page.setPageIndex(currentPage);
 		return page;
 	}
 }

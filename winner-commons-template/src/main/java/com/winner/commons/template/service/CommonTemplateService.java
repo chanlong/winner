@@ -1,6 +1,6 @@
 package com.winner.commons.template.service;
 
-import com.baomidou.mybatisplus.extension.service.IService;
+import com.diboot.core.service.BaseService;
 import com.winner.commons.template.entity.CommonTemplate;
 
 /**
@@ -12,6 +12,6 @@ import com.winner.commons.template.entity.CommonTemplate;
  * @Author chanlong
  * @Date 2021/2/24 下午2:57
  */
-public interface CommonTemplateService extends IService<CommonTemplate> {
+public interface CommonTemplateService extends BaseService<CommonTemplate> {
 
 }
